@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public abstract class MovingObject : MonoBehaviour
 {
-    public float moveTime = 0.1f;
+    public float moveTime = 0.01f;
     public LayerMask blockingLayer;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
     private float inverseMoveTime;
+    private bool isMoving;
 
     protected virtual void Start ()
     {
@@ -28,7 +30,7 @@ public abstract class MovingObject : MonoBehaviour
         hit = Physics2D.Linecast(start, end, blockingLayer);
         boxCollider.enabled = true;
 
-        if (hit.transform == null)
+        if (hit.transform == null && !isMoving)
         {
             StartCoroutine(SmoothMovement(end));
             return true;
@@ -37,6 +39,7 @@ public abstract class MovingObject : MonoBehaviour
     }
     protected IEnumerator SmoothMovement (Vector3 end)
     {
+        isMoving = true;
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 
         while (sqrRemainingDistance > float.Epsilon)
@@ -47,6 +50,8 @@ public abstract class MovingObject : MonoBehaviour
             yield return null;
 
         }
+        rb2D.MovePosition(end);
+        isMoving = false;
     }
 
     protected virtual void AttemptMove <T> (int xDir, int yDir)

@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Enemy : MovingObject 
 {
     public int playerDamage;
+   // public AudioClip attackSound1;
+   // public AudioClip attackSound2;
 
     private Animator animator;
     private Transform target;
     private bool skipMove;
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -47,6 +51,6 @@ public class Enemy : MovingObject
         Player hitPlayer = component as Player;
         animator.SetTrigger("enemyAttack");
         hitPlayer.LoseFood(playerDamage);
-
+        //SoundManager.instance.RandomizeSfx(attackSound1, attackSound2);
     }
 }

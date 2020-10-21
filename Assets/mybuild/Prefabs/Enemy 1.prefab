@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8131861120248914431}
   - component: {fileID: 7663985337085823714}
   - component: {fileID: 3759504297208965136}
-  - component: {fileID: 7928520946559675592}
+  - component: {fileID: -4124507744808861747}
   m_Layer: 8
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -151,7 +151,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7928520946559675592
+--- !u!114 &-4124507744808861747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,8 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606812eeea3dedb4cb19c346f3757c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 0.1
+  moveTime: 0.05
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
   playerDamage: 10
+  attackSound1: {fileID: 8300000, guid: 0db8cac2749584a009540aa5671ee80d, type: 3}
+  attackSound2: {fileID: 8300000, guid: 114514a3b3697484ebaa08f7fbf842d3, type: 3}

@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 8369213471448728559}
   - component: {fileID: 7972697193241848050}
   - component: {fileID: 3518216106157492736}
-  - component: {fileID: 7708056030416752344}
-  - component: {fileID: 23618421858449760}
+  - component: {fileID: -4960109058047406651}
   m_Layer: 8
   m_Name: Enemy 2 Variant
   m_TagString: Enemy
@@ -152,7 +151,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7708056030416752344
+--- !u!114 &-4960109058047406651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,25 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606812eeea3dedb4cb19c346f3757c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 0.1
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  playerDamage: 10
---- !u!114 &23618421858449760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8369213471448728558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606812eeea3dedb4cb19c346f3757c1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveTime: 0.1
+  moveTime: 0.05
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
   playerDamage: 20
+  attackSound1: {fileID: 8300000, guid: 0db8cac2749584a009540aa5671ee80d, type: 3}
+  attackSound2: {fileID: 8300000, guid: 114514a3b3697484ebaa08f7fbf842d3, type: 3}

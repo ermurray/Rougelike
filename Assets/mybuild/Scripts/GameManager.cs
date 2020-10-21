@@ -1,19 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public float levelStartDelay = 2f;
     public float turnDelay = .1f;
     public static GameManager instance = null;
-    public BoardManager boardScript;
+   
     public int playerFoodPoints = 100;
     [HideInInspector] public bool playersTurn = true;
-    private int level = 3;
+
+    private Text levelText;
+    private GameObject levelImage;
+    private BoardManager boardScript;
+    private int level = 1;
     private List<Enemy> enemies;
     private bool enemiesMoving;
-   // private GameObject levelImage;
+    private bool doingSetup;
+    // private GameObject levelImage;
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,33 +30,66 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
         boardScript = GetComponent<BoardManager>();
-        enemies = new List<Enemy>(); 
+        enemies = new List<Enemy>();
         InitGame();
 
     }
 
+    //OnlevelWasLoaded() is deprecated.
+    //private void OnlevelWasLoaded(int level)
+    //{
+    //  level++;
+    //InitGame();
+    //}
+    //this is called only once, and the paramter tell it to be called only after the scene was loaded
+    //(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static public void CallbackInitialization()
+     {
+    //register the callback to be called everytime the scene is loaded
+     SceneManager.sceneLoaded += OnSceneLoaded;
+     }
+    
+    
+    
+    //This is called each time a scene is loaded.
+    private static void OnSceneLoaded(Scene level, LoadSceneMode single)
+    {
+        instance.level++;
+        instance.InitGame();
+    }
+    //private void OnDisable()
+    //{
+    // SceneManager.sceneLoaded -= OnSceneLoaded;
+   // }
+
+
     void InitGame()
     {
+        doingSetup = true;
+
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        levelText.text = "Day " + level;
+        levelImage.SetActive(true);
+        enemies.Clear(); 
+        Invoke("HideLevelImage", levelStartDelay);
+
         enemies.Clear();
         boardScript.SetupScene(level);
 
     }
-
-    public void GameOver()
+    private void HideLevelImage()
     {
-        //Set levelText to display number of levels passed and game over message
-        //levelText.text = "After " + level + " days, you starved.";
-
-        //Enable black background image gameObject.
-    // levelImage.SetActive(true);
-
-        //Disable this GameManager.
-        enabled = false;
+        levelImage.SetActive(false);
+        doingSetup = false;
     }
+
+    
     // Update is called once per frame
     void Update()
     {
-        if (playersTurn || enemiesMoving)
+        if (playersTurn || enemiesMoving || doingSetup)
             return;
         StartCoroutine(MoveEnemies());
 
@@ -59,6 +99,17 @@ public class GameManager : MonoBehaviour
         enemies.Add(script);
     }
 
+    public void GameOver()
+    {
+        //Set levelText to display number of levels passed and game over message
+        levelText.text = "After " + level + " days, you starved.";
+
+        //Enable black background image gameObject.
+        levelImage.SetActive(true);
+
+        //Disable this GameManager.
+        enabled = false;
+    }
     IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
