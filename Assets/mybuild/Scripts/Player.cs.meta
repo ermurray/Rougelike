@@ -3,7 +3,12 @@ guid: b5715f13e9ea3814eb68827b76138983
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - foodText: {instanceID: 0}
+  - moveSound1: {instanceID: 0}
+  - moveSound2: {instanceID: 0}
+  - eatSound1: {instanceID: 0}
+  - eatSound2: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

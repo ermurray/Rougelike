@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public float levelStartDelay = 2f;
+    public float levelStartDelay = 1f;
     public float turnDelay = .1f;
     public static GameManager instance = null;
    
@@ -27,7 +27,10 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else if (instance != this)
+        {
             Destroy(gameObject);
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
         DontDestroyOnLoad(gameObject);
         boardScript = GetComponent<BoardManager>();
         enemies = new List<Enemy>();
@@ -57,6 +60,7 @@ public class GameManager : MonoBehaviour
     {
         instance.level++;
         instance.InitGame();
+ 
     }
     //private void OnDisable()
     //{
@@ -67,7 +71,7 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         doingSetup = true;
-
+        
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelText.text = "Day " + level;
@@ -77,6 +81,7 @@ public class GameManager : MonoBehaviour
 
         enemies.Clear();
         boardScript.SetupScene(level);
+        
 
     }
     private void HideLevelImage()
